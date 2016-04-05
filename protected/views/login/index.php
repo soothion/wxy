@@ -35,8 +35,7 @@
         $('#loginBtn').click(function(){
              $.post("<?php echo Yii::app()->getController()->createUrl('login/login')?>",$('#loginForm').serialize(),function(result){
                 if(result==1){
-                    var redirect = "<?php echo empty($_REQUEST['redirect'])?'':$_REQUEST['redirect']?>"
-                    window.location.href = "<?php $_REQUEST['redirect']?>";
+                    window.location.href = '/blog/index/1';
                 }
                 if(result==0)
                     $("#voice").html('用户名或密码错误');
