@@ -4,7 +4,7 @@ class LoginController extends Controller{
     public function actionIndex(){
         $user = Yii::app()->user;
         if(!$user->isGuest){
-            $domain = 'http://wxy.com';
+            $domain = 'http://'.$_SERVER['SERVER_NAME'];
             $redirect_uri = $domain.$this->createUrl('/login/wechat');
             $appid = 'wxf7b2f9f903f9aa2b';
             $scope = 'snsapi_userinfo';
