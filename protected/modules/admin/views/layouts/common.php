@@ -40,6 +40,7 @@ Yii::app()->bootstrap->register();//载入boostrap
                             )),
                             array('label'=>'文章管理', 'url'=>array('/admin/blog/admin')),
                             array('label'=>'分类管理', 'url'=>array('/admin/category/admin')),
+                            array('label'=>'用户管理', 'url'=>array('/admin/users/admin')),
                         ),  
                     ),
                     array(
