@@ -3,9 +3,12 @@
 class BlogController extends Controller{
     public function actionIndex(){
         $user = Yii::app()->user;
-        echo '<pre>';
-        print_r($user);die;
-        if(!isset($user->username)||!isset($user->openid)){
+        if(!$user->isGuest){
+            $user=Users::model()->find($user->id);
+            if(!$user->openid)
+                $this->redirect('/login/index');
+        }
+        else{
             $this->redirect('/login/index');
         }
         $criteria=new CDbCriteria;

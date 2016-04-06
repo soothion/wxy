@@ -3,7 +3,7 @@
 class LoginController extends Controller{
     public function actionIndex(){
         $user = Yii::app()->user;
-        if(isset($user->username)){
+        if(!$user->isGuest){
             $domain = 'http://wxy.com';
             $redirect_uri = $domain.$this->createUrl('/login/wechat');
             $appid = 'wxf7b2f9f903f9aa2b';
@@ -24,7 +24,7 @@ class LoginController extends Controller{
         $result = file_get_contents($url);
         $result = json_decode($result);
         $openid = $result->openid;
-        if(!isset($user->openid)){
+        if(!$user->openid){
             $user=  Users::model()->find($user->id);
             $user->openid = $openid;
             $user->save();
@@ -34,6 +34,7 @@ class LoginController extends Controller{
             $this->redirect('/blog/index/1');
         }
         elseif($user->openid!=$openid){
+            header("Content-type: text/html; charset=utf-8");
             echo '<h2>此帐号已绑定其他微信帐号</h2>';
         }
     }
@@ -52,4 +53,10 @@ class LoginController extends Controller{
             $result = 0;
         echo $result;
     }
+
+    public function actionLogout(){
+        Yii::app()->user->logout(true);
+        $this->redirect(array('/login/index'));
+    }
+
 }
