@@ -2,7 +2,40 @@
 
 class LoginController extends Controller{
     public function actionIndex(){
-        $this->renderPartial('index',array('note'=>''));
+        $user = Yii::app()->user;
+        if(isset($user->username)){
+            $domain = 'http://wxy.com';
+            $redirect_uri = $domain.$this->createUrl('/login/wechat');
+            $appid = 'wxf7b2f9f903f9aa2b';
+            $scope = 'snsapi_userinfo';
+            $url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid={$appid}&redirect_uri={$redirect_uri}&response_type=code&scope={$scope}&state=123#wechat_redirect";
+            $this->redirect($url);
+        }
+        $this->renderPartial('index',array('note'=>'','user'=>$user));
+    }
+
+
+    public function actionWechat(){
+        $user = Yii::app()->user;
+        $code = $_REQUEST['code'];
+        $appid = 'wxf7b2f9f903f9aa2b';
+        $secret = 'd902190a34e3cf9ec84ed871146696c8';
+        $url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid={$appid}&secret={$secret}&code={$code}&grant_type=authorization_code";
+        $result = file_get_contents($url);
+        $result = json_decode($result);
+        $openid = $result->openid;
+        if(!isset($user->openid)){
+            $user=  Users::model()->find($user->id);
+            $user->openid = $openid;
+            $user->save();
+            $this->redirect('/blog/index/1');
+        }
+        elseif($user->openid==$openid){
+            $this->redirect('/blog/index/1');
+        }
+        elseif($user->openid!=$openid){
+            echo '<h2>此帐号已绑定其他微信帐号</h2>';
+        }
     }
 
     public function actionLogin() {

@@ -3,8 +3,10 @@
 class BlogController extends Controller{
     public function actionIndex(){
         $user = Yii::app()->user;
-        if($user->isGuest||empty($user->wechat)){
-            $this->redirect('/login/index?redirect='.$this->createUrl('/blog/index',array('id'=>$_REQUEST['id'])));
+        echo '<pre>';
+        print_r($user);die;
+        if(!isset($user->username)||!isset($user->openid)){
+            $this->redirect('/login/index');
         }
         $criteria=new CDbCriteria;
         $criteria->order='recommend desc,sort desc,addtime desc';
