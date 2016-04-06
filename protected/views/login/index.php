@@ -15,12 +15,12 @@
 <section id="loginContent" >
     <form class="common-style-div common-margin-top" id="loginForm">
         <div class="lg-input-text">
-            <input type="text" class="text1" name="LoginForm[username]" id="phone" value="soothion" placeholder="请输入帐号"><div class="btn-div">
+            <input type="text" class="text1" name="LoginForm[username]" id="phone" value="" placeholder="请输入帐号"><div class="btn-div">
         </div>
         </div>
         <div class="gray-line"></div>
         <div class="lg-input-text">
-            <input type="password" class="text2" id="code" value="xiaoxiaoyi" name="LoginForm[password]" placeholder="请输入密码">
+            <input type="password" class="text2" id="code" value="" name="LoginForm[password]" placeholder="请输入密码">
         </div>
     </form>
     <div class="clear" style="height: 25px;"></div>
