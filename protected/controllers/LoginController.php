@@ -27,6 +27,7 @@ class LoginController extends Controller{
         if($user->openid==''){
             $user =  Users::model()->findByAttributes(array('id'=>$user->id));
             $user->openid = $openid;
+            $user->save();
             $this->redirect('/blog/index/1');
         }
         elseif($user->openid==$openid){
