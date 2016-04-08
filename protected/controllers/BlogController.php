@@ -2,11 +2,18 @@
 
 class BlogController extends Controller{
     public function actionIndex(){
+        if(!isset(Yii::app()->session['openid'])){
+            $this->redirect('/login/index');
+        }
         $user = Yii::app()->user;
         if(!$user->isGuest){
             $user=Users::model()->find($user->id);
             if(!$user->openid)
                 $this->redirect('/login/index');
+            if($_SESSION['openid']!=$user->openid){
+                header("Content-type: text/html; charset=utf-8");
+                echo '<h2>此帐号已绑定其他微信帐号</h2>';
+            }
         }
         else{
             $this->redirect('/login/index');

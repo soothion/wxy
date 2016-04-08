@@ -24,6 +24,7 @@ class LoginController extends Controller{
         $result = file_get_contents($url);
         $result = json_decode($result);
         $openid = $result->openid;
+        Yii::app()->session['openid'] = $openid;
         if($user->openid==''){
             $user =  Users::model()->findByAttributes(array('id'=>$user->id));
             $user->openid = $openid;
