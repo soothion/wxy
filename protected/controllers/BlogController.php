@@ -13,7 +13,7 @@ class BlogController extends Controller{
             if($_SESSION['openid']!=$user->openid){
                 header("Content-type: text/html; charset=utf-8");
                 echo '<h2>此帐号已绑定其他微信帐号</h2>';
-                $login = $this->createUrl('/login/index');
+                $login = $this->createUrl('/login/logout');
                 echo "<a href='{$login}'>切换帐号</a>";
                 die;
             }
