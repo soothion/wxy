@@ -7,7 +7,7 @@ class BlogController extends Controller{
         }
         $user = Yii::app()->user;
         if(!$user->isGuest){
-            $user=Users::model()->find($user->id);
+            $user =  Users::model()->findByAttributes(array('id'=>$user->id));
             if(!$user->openid)
                 $this->redirect('/login/index');
             if($_SESSION['openid']!=$user->openid){
