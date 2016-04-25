@@ -17,6 +17,7 @@ class LoginController extends Controller{
 
     public function actionWechat(){
         $user = Yii::app()->user;
+        $user =  Users::model()->findByAttributes(array('id'=>$user->id));
         $code = $_REQUEST['code'];
         $appid = 'wxf7b2f9f903f9aa2b';
         $secret = 'd902190a34e3cf9ec84ed871146696c8';
@@ -26,7 +27,6 @@ class LoginController extends Controller{
         $openid = $result->openid;
         Yii::app()->session['openid'] = $openid;
         if($user->openid==''){
-            $user =  Users::model()->findByAttributes(array('id'=>$user->id));
             $user->openid = $openid;
             $user->save();
             $this->redirect('/blog/index/1');
